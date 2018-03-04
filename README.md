@@ -15,7 +15,8 @@ Extracts a specific certificate from acme.json and restart traefik container on 
 
 ### traefik.toml example
 
-`[entryPoints]  
+```toml
+[entryPoints]  
 ...  
   [entryPoints.https]  
   address = ":443"  
@@ -31,11 +32,13 @@ main= "__DEFAULT.YOURDOMAIN.COM__"
 sans=[  
 "__YOURDOMAIN.COM__",  
 "__WWW.YOURDOMAIN.COM__"  
-]`
+]
+```
 
 ### docker-compose example
 
-`version: "2.3"  
+```yaml
+version: "2.3"  
 services:  
   
 ###################################################################################  
@@ -78,7 +81,8 @@ services:
     - ./traefik/conf/traefik.toml:/traefik.toml:ro  
     - ./traefik/vol/acme.json:/acme.json  
     - ./traefik/vol/cert:/cert:ro  
-    restart: always`
+    restart: always
+```
 
 ### Sources
 
