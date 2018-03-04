@@ -1,4 +1,4 @@
-## traefik-cert-cron
+## traefik-default-cert
 
 Docker Hub: [ziezo/traefik-default-cert](https://hub.docker.com/r/ziezo/traefik-default-cert/)
 
