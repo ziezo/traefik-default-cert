@@ -3,19 +3,19 @@
 #domain to extract
 DOMAIN="${CERT_DOMAIN}"
 
-#extract fullchain.pem and privkey.pem to this directory
+#extract fullchain.pem, privkey.pem, cert.pem, and chain.pem to this directory
 OUTPUTDIR="/cert"
 
 #traefik acme.json file
 ACME_JSON="/acme.json"
 
-#container to restart on changed cert
-CONTAINER="${TRAEFIK_CONTAINER}"
+#command to execute on changed cert
+CMD="/on-change.sh"
 
 ###########################################################
 
 echo "###### `date` started" 
 
-/acme-cert-dump.py --post-update "docker restart $CONTAINER" "$ACME_JSON" "$DOMAIN" $OUTPUTDIR 
+/acme-cert-dump.py --post-update "$CMD" "$ACME_JSON" "$DOMAIN" $OUTPUTDIR 
 
 echo "###### `date` completed" 

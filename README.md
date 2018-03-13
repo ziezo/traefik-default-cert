@@ -52,13 +52,20 @@ services:
     - /var/run/docker.sock:/var/run/docker.sock  
     #acme.json  
     - ./traefik/vol/acme.json:/acme.json:ro  
-    #extracted cert is stored here  
-    - ./traefik/vol/cert:/cert  
+    #treafik target for extracted cert 
+    - ./traefik/vol/cert:/traefik
+    #poste.io target for extracted cert
+    - ./mail/vol/data/ssl:/poste.io    
     environment:  
     #domain to extract (MAIN domain, not SAN domain)  
     - "CERT_DOMAIN=__DEFAULT.YOURDOMAIN.COM__"  
-    #container to restart after cert change  
-    - "TRAEFIK_CONTAINER=traefik"  
+    #where to copy the cert files (separated by :)  
+    - "COPY_FULLCHAIN=/poste.io/server.crt:/traefik/fullchain.pem"
+    - "COPY_PRIVKEY=/poste.io/server.key:/traefik/privkey.pem"
+    - "COPY_CHAIN=/poste.io/ca.crt"
+    - "COPY_CERT="  
+    #containers to restart
+    - "RESTART=mail traefik"
     #cron time to run cert extract  
     - "CRON_TIME=0 1 * * *"  
     depends_on:  
@@ -86,7 +93,7 @@ services:
 
 ### Sources
 
-acme-cert-dump.py creates fullchain.pem and privkey.pem  
+acme-cert-dump.py creates fullchain.pem, privkey.pem, cert.pem, and chain.pem         
 [JayH5/acme-cert-dump.py](https://gist.github.com/JayH5/f9e4dc48635f3faa63c52813ff6d115f)
 
 acme-cert-all-dump.py  creates /cert/path/domain1.com.cert /cert/path/domain2.com.cert  

@@ -22,14 +22,21 @@ def main(raw_args=sys.argv[1:]):
     args = parser.parse_args(raw_args)
  
     new_privkey, new_fullchain = read_domain_certs(args.acme_json, args.domain)
- 
+    start = new_fullchain.find('-----BEGIN CERTIFICATE-----', 1)
+    new_cert = new_fullchain[0:start]
+    new_chain = new_fullchain[start:]
+
     old_privkey = read_cert(args.dest_dir, 'privkey.pem')
     old_fullchain = read_cert(args.dest_dir, 'fullchain.pem')
- 
-    if new_privkey != old_privkey or new_fullchain != old_fullchain:
+    old_cert = read_cert(args.dest_dir, 'cert.pem')
+    old_chain = read_cert(args.dest_dir, 'chain.pem');
+
+    if new_privkey != old_privkey or new_fullchain != old_fullchain or new_cert != old_cert or new_chain != old_chain:
         print('Certificates changed! Writing new files...')
         write_cert(args.dest_dir, 'privkey.pem', new_privkey)
         write_cert(args.dest_dir, 'fullchain.pem', new_fullchain)
+        write_cert(args.dest_dir, 'cert.pem', new_cert);
+        write_cert(args.dest_dir, 'chain.pem', new_chain);
  
         if args.post_update is not None:
             print('Running post update command "%s"' % (args.post_update,))

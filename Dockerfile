@@ -1,6 +1,6 @@
 FROM docker:dind
 
-COPY ["run.sh", "cron.sh", "acme-cert-dump-all.py", "acme-cert-dump.py", "/"]
+COPY ["run.sh", "cron.sh", "on-change.sh", "acme-cert-dump-all.py", "acme-cert-dump.py", "/"]
 
 RUN apk add --update \
     bash \
