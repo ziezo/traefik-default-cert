@@ -6,6 +6,8 @@ function copy_files {
   do
     echo "cp $1 $fn"
     cp "$1" "$fn"
+    echo "chmod 644 $fn"
+    chmod 644 "$fn"
   done
 }
 
