@@ -2,7 +2,7 @@
 
 Docker Hub: [ziezo/traefik-default-cert](https://hub.docker.com/r/ziezo/traefik-default-cert/)
 
-Set default traefik certificate.
+Set default traefik 1.7 certificate.
 
 Extracts a specific certificate from acme.json and restart traefik container on changed cert. Can be used to setup a default cert for traefik, so that non SNI clients like IE8 work correctly.
 
@@ -78,7 +78,7 @@ services:
 ###################################################################################  
   traefik:  
     container_name: traefik  
-    image: traefik:1.5  
+    image: traefik:1.7 
     command: --docker  
     ports:  
     - "80:80"  
